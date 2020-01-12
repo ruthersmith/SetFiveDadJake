@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/importJoke', function f(req,res,next) {
     console.log(req.body);
-    importJokes('dad',res);
+    importJokes(req.body.joke_to_get,res);
 });
 
 function importJokes(term='',res){
