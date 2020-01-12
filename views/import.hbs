@@ -1,24 +1,42 @@
-<h1>{{title}}</h1>
-<p>Search For Jokes</p>
 
 <div class="container-fluid">
 
-    <form>
+    <p>Import Jokes From icanhazdadjoke</p>
+
+    <form id="import-joke-form">
         <div class="form-row align-items-center">
-            <div class="col-auto">
-                <label class="sr-only" for="inlineFormInput">Enter The Joke or The Joke Id</label>
-                <input type="text" class="form-control mb-2" id="joke" placeholder="hahaha">
-            </div>
 
             <div class="col-auto">
-                <button type="submit" class="btn btn-primary mb-2" onclick="getJokesFromServer();return false">Submit</button>
+                <label class="sr-only" for="inlineFormInput">Enter The Joke or The Joke Id</label>
+                <input type="text" class="form-control mb-2" id="joke" name="joke_to_get" placeholder="hahaha">
+            </div>
+
+            <div id="import-joke-btn" class="col-auto">
+                <button type="submit" class="btn btn-primary mb-2">Submit</button>
             </div>
         </div>
     </form>
-    <div class="row" id="joke-list">
-        <div class="col-md-12">Jokes goes here</div>
-    </div>
+
+    <h4>imported Jokes will be displayed below</h4>
+    <ul class="list-group" id="joke-list">
+    </ul>
 
 </div>
+<script src="/javascripts/generalhelper.js"></script>
+
+<script>
+    $(document).ready(function(){
+        document.getElementById('import-joke-btn').onclick = importJokes;
+    });
+
+    function importJokes(e) {
+        e.preventDefault();
+        var this_data = $('#import-joke-form').serialize();
+        ajax("POST","import/importJoke",this_data,displayJokes);
+        console.log('import jokes called');
+    }
 
 
+
+
+</script>

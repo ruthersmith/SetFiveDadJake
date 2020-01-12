@@ -1,4 +1,5 @@
 function ajax(my_type,my_url,my_data,successCall){
+    console.log('ajax called');
     $.ajax({
         type: my_type,
         url: my_url,
@@ -9,3 +10,13 @@ function ajax(my_type,my_url,my_data,successCall){
         }
     });
 }
+
+function displayJokes(result){
+    console.log('displayJokes called');
+    result.forEach(element => {
+        $('#joke-list').append(`<a href="search/${element.id}"><li class="list-group-item">${element.joke}</li></a>`);
+    });
+}
+
+
+

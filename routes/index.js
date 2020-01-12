@@ -8,22 +8,11 @@ var jokes_with_sqlite = require('../models/jokes_with_sqlite');
 router.get('/', function(req, res, next) {
   //importJokes(term);
   console.log(req.body);
-  res.render('index', { title: 'Express' });
+  // res.render('index', { title: 'Express' });
+  res.render('front', { title: 'Express' });
 });
 
-function importJokes(){
-  let url = "https://icanhazdadjoke.com/search?term=hipster";
-  request(url, { json: true }, (err, res, body) => {
-    if (err) { return console.log(err); }
-    console.log(body.results);
 
-    body.results.forEach(function (item) {
-      console.log("joke 1 " + item.joke);
-      let sql = "INSERT INTO jokes(joke_id,joke) VALUES(?,?)";
-      jokes_with_sqlite.commit_to_db(sql,[item.id,item.joke]);
-    });
-  });
-}
 
 router.get('/joke/:id', function(req,res,next){
   let jokeid  = (req.params.id);
