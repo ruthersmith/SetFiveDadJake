@@ -1,0 +1,42 @@
+<h1>{{title}}</h1>
+<p>Search For Jokes</p>
+
+<div class="container-fluid">
+
+    <form>
+        <div class="form-row align-items-center">
+            <div class="col-auto">
+                <label class="sr-only" for="inlineFormInput">Enter The Joke or The Joke Id</label>
+                <input type="text" class="form-control mb-2" id="joke" placeholder="hahaha">
+            </div>
+
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-2" onclick="getJokesFromServer();return false">Submit</button>
+            </div>
+        </div>
+    </form>
+    <div class="row" id="joke-list">
+        <div class="col-md-12">Jokes goes here</div>
+    </div>
+
+</div>
+
+
+<script src="/javascripts/helper.js"></script>
+<script>
+
+    function getJokesFromServer() {
+        let search = document.getElementById('joke').value;
+        ajax("POST",'/getJokesfromdb',search,displayJokesFromServer)
+    }
+
+    function displayJokesFromServer(result){
+        console.log("here");
+        console.log(result);
+        result.forEach(element => {
+            $('#joke-list').append(`<a href="/joke/${element.joke_id}">${element.joke}</a>`);
+        });
+    }
+
+
+</script>

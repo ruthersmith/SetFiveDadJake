@@ -1,0 +1,5 @@
+This is my solution for the technical project interview.
+It is written with Nodejs and express and uses a sqlite3 database
+Unfortunately It is not complete.
+It does use the dad joke api.
+However it is not really connected to a front end
