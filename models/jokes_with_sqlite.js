@@ -22,7 +22,7 @@ let commit_to_db = function(sql,params){
 };
 
 let get_from_db =  function(sql,params,res){
-    db.all(sql,[],(err, rows ) => {
+    db.all(sql,params,(err, rows ) => {
         // process rows here
         if (err) {
             console.log(err.message);

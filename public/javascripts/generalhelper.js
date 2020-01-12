@@ -13,7 +13,9 @@ function ajax(my_type,my_url,my_data,successCall){
 
 function displayJokes(result){
     console.log('displayJokes called');
+    document.getElementById('joke-list').innerHTML = " ";
     result.forEach(element => {
+        element.id = (element.id) ? element.id : element.joke_id;
         $('#joke-list').append(`<a href="search/${element.id}"><li class="list-group-item">${element.joke}</li></a>`);
     });
 }

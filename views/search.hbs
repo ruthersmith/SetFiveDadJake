@@ -1,0 +1,35 @@
+
+<div class="container-fluid">
+    <p>Search For Jokes</p>
+
+    <form id="search-joke-form">
+        <div class="form-row align-items-center">
+            <div class="col-auto">
+                <label class="sr-only" for="inlineFormInput">Enter The Joke or The Joke Id</label>
+                <input type="text" required class="form-control mb-2"  name="search" id="search" placeholder="hahaha">
+            </div>
+
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-2" id="search-joke-btn">Submit</button>
+            </div>
+        </div>
+    </form>
+
+    <h4>Jokes From Database will be displayed below</h4>
+    <ul class="list-group" id="joke-list">
+    </ul>
+
+</div>
+<script src="/javascripts/generalhelper.js"></script>
+<script>
+    $(document).ready(function(){
+        document.getElementById('search-joke-btn').onclick = searchJokes;
+    });
+
+    function searchJokes(e) {
+        e.preventDefault();
+        var this_data = $('#search-joke-form').serialize();
+        ajax("POST","search/searchJoke",this_data,displayJokes);
+        //console.log('search jokes called');
+    }
+</script>
