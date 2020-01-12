@@ -14,4 +14,9 @@ router.post('/searchJoke', function (req,res,next) {
     jokes_with_sqlite.get_from_db(sql, param,res);
 });
 
+router.get('/:id', function(req,res,next){
+    let jokeid  = (req.params.id);
+    res.render('jokepage', { id: jokeid});
+});
+
 module.exports = router;
