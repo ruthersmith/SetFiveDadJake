@@ -1,29 +1,28 @@
 <div class="container">
     <div class="row bootstrap snippets">
         <div class="col-md-6 col-md-offset-2 col-sm-12">
-            <h5>{{id}}</h5>
+            <h6 id="joke-id">{{id}}</h6>
+            <p id="joke"></p>
             <div class="comment-wrapper">
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         Comment panel
                     </div>
                     <div class="panel-body">
-                        <textarea class="form-control" placeholder="write a comment..." rows="3"></textarea>
-                        <br>
+                        <form id="comment-form">
+                            <textarea class="form-control" name="comment" required placeholder="write a comment..." rows="3"></textarea>
+                            <br>
 
-                        <input type="radio" id="rating-4" name="rating" value="4" checked="checked" />
-                        <input type="radio" id="rating-4" name="rating" value="4" checked="checked" />
 
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
+                            <span>Average Rating:</span>
+                            <input id="rating" type="number" required name="rating" min="1" max="5">
 
-                        <button type="button" class="btn btn-info pull-right">Post</button>
-                        <div class="clearfix"></div>
-                        <hr>
-                        <ul class="list-group">
+                            <button type="submit" id="submit-joke-comment" class="btn btn-info pull-right">Post</button>
+                            <div class="clearfix"></div>
+                            <hr>
+                        </form>
+
+                        <ul class="list-group" id="comment-list">
                             <li class="list-group-item">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                                 Lorem ipsum dolor sit amet,
@@ -41,6 +40,42 @@
 <script src="/javascripts/generalhelper.js"></script>
 <script>
     $(document).ready(function(){
-
+        getJokesById();
+        getComments();
+        document.getElementById('submit-joke-comment').onclick = postJokeComment;
     });
+
+    function getComments() {
+         console.log('get comment called');
+        let id = document.getElementById('joke-id').innerText;
+        ajax("POST","getComments",{id:id},displayComments);
+    }
+    
+    function getJokesById() {
+        let id = document.getElementById('joke-id').innerText;
+        ajax("POST","getJokeById",{id:id},displayJoke);
+    }
+
+    function displayJoke(result) {
+        document.getElementById('joke').innerText = result[0].joke;
+    }
+
+    function displayComments(result) {
+        console.log(result);
+        document.getElementById('comment-list').innerHTML = " ";
+        if (result){
+            result.forEach(element => {
+                $('#comment-list').append(`<li class="list-group-item">${element.comment}</li>`);
+            });
+        }
+
+    }
+
+    function postJokeComment(e) {
+        e.preventDefault();
+        var this_data = $('#comment-form').serialize();
+        this_data += `&joke_id=${document.getElementById('joke-id').innerText}`;
+        ajax("POST","postComment",this_data,getComments);
+    }
+
 </script>
